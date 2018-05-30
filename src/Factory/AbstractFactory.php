@@ -38,11 +38,18 @@ abstract class AbstractFactory
      */
     final protected function getAnnotationReader(): Reader
     {
-        $driver = $this->entityManager->getConfiguration()->getMetadataDriverImpl();
-        if (!$driver instanceof AnnotationDriver) {
-            throw new Exception('graphql-doctrine requires Doctrine to be configured with a `' . AnnotationDriver::class . '`.');
-        }
-
-        return $driver->getReader();
+        $mappingDriver = $this->entityManager->getConfiguration()->getMetadataDriverImpl();
++        if ($mappingDriver instanceof AnnotationDriver) {
++            return $mappingDriver->getReader();
++        }
++        if ($mappingDriver instanceof MappingDriverChain) {
++            foreach ($mappingDriver->getDrivers() as $driver) {
++                if ($driver instanceof AnnotationDriver) {
++                    return $driver->getReader();
++                }
++            }
++        }
++
++        throw new \Exception('AnnotationDriver not found in the entityManager');
     }
 }

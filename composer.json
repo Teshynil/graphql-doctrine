@@ -1,5 +1,5 @@
 {
-    "name": "teshynil/graphql-doctrine",
+    "name": "ecodev/graphql-doctrine",
     "description": "Declare GraphQL types from Doctrine entities and annotations fork from ecodev",
     "type": "library",
     "keywords": ["api", "graphql", "doctrine", "doctrine-orm"],

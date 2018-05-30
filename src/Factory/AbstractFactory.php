@@ -39,17 +39,17 @@ abstract class AbstractFactory
     final protected function getAnnotationReader(): Reader
     {
         $mappingDriver = $this->entityManager->getConfiguration()->getMetadataDriverImpl();
-+        if ($mappingDriver instanceof AnnotationDriver) {
-+            return $mappingDriver->getReader();
-+        }
-+        if ($mappingDriver instanceof MappingDriverChain) {
-+            foreach ($mappingDriver->getDrivers() as $driver) {
-+                if ($driver instanceof AnnotationDriver) {
-+                    return $driver->getReader();
-+                }
-+            }
-+        }
-+
-+        throw new \Exception('AnnotationDriver not found in the entityManager');
+        if ($mappingDriver instanceof AnnotationDriver) {
+            return $mappingDriver->getReader();
+        }
+        if ($mappingDriver instanceof MappingDriverChain) {
+            foreach ($mappingDriver->getDrivers() as $driver) {
+                if ($driver instanceof AnnotationDriver) {
+                    return $driver->getReader();
+                }
+            }
+        }
+
+        throw new \Exception('AnnotationDriver not found in the entityManager');
     }
 }
